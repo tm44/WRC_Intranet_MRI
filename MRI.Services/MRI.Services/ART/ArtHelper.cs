@@ -33,11 +33,11 @@ namespace MRI.Services.ART
                         {
                             Amount = reader.GetDecimal("Amount"),
                             CheckDate = reader.GetString("CheckDate"),
-                            CheckNumber = reader.GetInt32("CheckNumber"),
+                            CheckNumber = reader.GetString("CheckNumber").Trim(),
                             Description = reader.GetString("Description"),
-                            Entity = reader.GetInt32("Entity"),
+                            Entity = reader.GetString("Entity").Trim(),
                             Invoice = reader.GetString("Invoice"),
-                            Item = reader.GetString("Item"),
+                            Item = reader.GetInt16("Item"),
                             UserID = reader.GetString("UserID"),
                             Vendor = reader.GetString("Vendor")
                         };
@@ -46,42 +46,15 @@ namespace MRI.Services.ART
                 }
             }
 
-            var u1 = new UnbilledRecord()
-            {
-                Amount = 123.45M,
-                CheckDate = "1/2/2023",
-                CheckNumber = 1234,
-                Description = "A description",
-                Entity = 001,
-                Invoice = "INV001",
-                Item = "Item 1",
-                UserID = "MIKE",
-                Vendor = "Vendor 1"
-            };
-            var u2 = new UnbilledRecord()
-            {
-                Amount = 54.32M,
-                CheckDate = "2/13/2023",
-                CheckNumber = 1235,
-                Description = "Another description",
-                Entity = 001,
-                Invoice = "INV002",
-                Item = "Item 2",
-                UserID = "JAIYA",
-                Vendor = "Vendor 2"
-            };
-            l.Add(u1);
-            l.Add(u2);
-
             return l;
         }
 
         public ArtRunResult RunArt(DateTime invoiceDate, string expensePeriod, string entity)
         {
-            var r = new ArtRunResult();
-            r.RowsCreated = 2;
-            r.BatchID = "246810";
-            return r;
+            //var r = new ArtRunResult();
+            //r.RowsCreated = 2;
+            //r.BatchID = "246810";
+            //return r;
 
             DataSet ds = new DataSet();
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -113,13 +86,13 @@ namespace MRI.Services.ART
 
     public class UnbilledRecord
     {
-        public int Entity { get; set; }
+        public string Entity { get; set; }
         public string Vendor { get; set; }
         public string Invoice { get; set; }
-        public string Item { get; set; }
+        public short Item { get; set; }
         public string Description { get; set; }
         public decimal Amount { get; set; }
-        public int CheckNumber { get; set; }
+        public string CheckNumber { get; set; }
         public string CheckDate { get; set; }
         public string UserID  { get; set; }
     }
