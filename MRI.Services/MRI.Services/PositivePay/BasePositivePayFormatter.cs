@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MRI.Services;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -6,6 +7,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Web;
+
 
 namespace MRIServices
 {
@@ -27,8 +29,8 @@ namespace MRIServices
 
         public DataSet GetRecords(DateTime startDate, DateTime endDate)
         {
-            // TODO: Figure out how to get around this
-            var connectionString = "Data Source=SQL;Initial Catalog=mriwrc;Integrated Security=SSPI;";
+            var connectionString = ConfigHelper.GetConnectionString();
+
             DataSet ds = new DataSet();
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

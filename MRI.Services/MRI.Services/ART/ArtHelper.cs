@@ -8,11 +8,10 @@ namespace MRI.Services.ART
 {
     public class ArtHelper
     {
-        private const string connectionString = "Data Source=SQL;Initial Catalog=mriwrc;Integrated Security=SSPI;";
         public List<UnbilledRecord> GetUnbilledRecords(string expensePeriod, string entityId)
         {
             var l = new List<UnbilledRecord>();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConfigHelper.GetConnectionString()))
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = connection;
@@ -51,13 +50,8 @@ namespace MRI.Services.ART
 
         public ArtRunResult RunArt(DateTime invoiceDate, string expensePeriod, string entity)
         {
-            //var r = new ArtRunResult();
-            //r.RowsCreated = 2;
-            //r.BatchID = "246810";
-            //return r;
-
             DataSet ds = new DataSet();
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection connection = new SqlConnection(ConfigHelper.GetConnectionString()))
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = connection;
