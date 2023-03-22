@@ -5,12 +5,12 @@ using MRI_Services;
 
 namespace MRI.Services.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/art")]
     [ApiController]
     public class ArtController : ControllerBase
     {
-        // http://localhost:5276/api/Art?expensePeriod=202301&entity=001
-        [HttpGet]
+        // http://mri_services/api/Art/111/202303
+        [HttpGet("{entity}/{expensePeriod}")]
         public ActionResult Get(string expensePeriod, string entity)
         {
             var helper = new ArtHelper();

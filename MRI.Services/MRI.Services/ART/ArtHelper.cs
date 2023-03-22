@@ -36,7 +36,7 @@ namespace MRI.Services.ART
                             Description = reader.GetString("Description"),
                             Entity = reader.GetString("Entity").Trim(),
                             Invoice = reader.GetString("Invoice"),
-                            Item = reader.GetInt16("Item"),
+                            Item = reader.GetInt32("Item"),
                             UserID = reader.GetString("UserID"),
                             Vendor = reader.GetString("Vendor")
                         };
@@ -83,7 +83,7 @@ namespace MRI.Services.ART
         public string Entity { get; set; }
         public string Vendor { get; set; }
         public string Invoice { get; set; }
-        public short Item { get; set; }
+        public int Item { get; set; }
         public string Description { get; set; }
         public decimal Amount { get; set; }
         public string CheckNumber { get; set; }
