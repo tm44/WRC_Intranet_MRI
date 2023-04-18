@@ -6,6 +6,7 @@ namespace MRI_Services
     public class PositivePayHelper
     {
         private string _entity { get; set; }
+        private IPositivePayFormatter _formatter;
         public PositivePayHelper(string entity)
         {
             _entity = entity;
@@ -13,29 +14,25 @@ namespace MRI_Services
 
         public byte[] GetPositivePayFile(DateTime start, DateTime end, bool includePayee)
         {
-
-            //Response.AddHeader("content-disposition", "attachment; filename=" + formatter.FileName);
-
+            Encoding utf8WithoutBom = new UTF8Encoding(false);
             MemoryStream stream = new MemoryStream();
-            using (StreamWriter writer = new StreamWriter(stream, Encoding.UTF8))
+            using (StreamWriter writer = new StreamWriter(stream, utf8WithoutBom))
             {
-                var formatter = GetFormatter(writer);
-                formatter.WriteHeader();
+                _formatter = GetFormatter(writer);
+                _formatter.WriteHeader();
 
-                var info = formatter.GetChecks(start, end);
+                var info = _formatter.GetChecks(start, end);
 
                 foreach (var check in info.CheckList)
                 {
-                    formatter.WriteCheckRow(check, includePayee);
+                    _formatter.WriteCheckRow(check, includePayee);
                 }
-                formatter.WriteFooter(info);
-
-                // writer.Write($"This is the content - {_entity} - {_expensePeriod}");
+                _formatter.WriteFooter(info);
             }
             return stream.ToArray();
         }
 
-        public string Filename => $"PositivePay_001_{DateTime.Now.ToString()}.txt";
+        public string Filename => _formatter.FileName;
 
         private IPositivePayFormatter GetFormatter(StreamWriter writer)
         {

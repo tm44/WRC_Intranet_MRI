@@ -12,8 +12,8 @@ namespace MRI.Services.Controllers
         public ActionResult Get(string entity, string start, string end, bool includePayee)
         {
             var helper = new PositivePayHelper(entity);
-            var bytes = helper.GetPositivePayFile(DateTime.Parse(start), DateTime.Parse(end), includePayee);
-            return File(bytes, "text/plain", helper.Filename);
+            var bytes =  helper.GetPositivePayFile(DateTime.Parse(start), DateTime.Parse(end), includePayee);
+            return File(bytes, "text/plain;charset=utf-8", helper.Filename);
         }
     }
 }
