@@ -9,10 +9,10 @@ namespace MRI.Services.Controllers
     public class PositivePayController : ControllerBase
     {
         [HttpGet]
-        public ActionResult Get(string entity, string start, string end, bool includePayee)
+        public FileResult Get(string entity, string start, string end, bool includePayee)
         {
             var helper = new PositivePayHelper(entity);
-            var bytes =  helper.GetPositivePayFile(DateTime.Parse(start), DateTime.Parse(end), includePayee);
+            var bytes = helper.GetPositivePayFile(DateTime.Parse(start), DateTime.Parse(end), includePayee);
             return File(bytes, "text/plain;charset=utf-8", helper.Filename);
         }
     }
