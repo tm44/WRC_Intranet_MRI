@@ -1,6 +1,8 @@
 ﻿using MRI.Services.ART;
+using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace MRI.Services.Budget
 {
@@ -12,19 +14,20 @@ namespace MRI.Services.Budget
             {
                 SqlCommand cmd = new SqlCommand();
                 cmd.Connection = connection;
+                cmd.Connection.Open();
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 cmd.CommandText = "WRC_InsertBudget";
 
                 cmd.Parameters.Add(new SqlParameter("Period", record.Period));
                 cmd.Parameters.Add(new SqlParameter("EntityID", record.EntityID));
-                cmd.Parameters.Add(new SqlParameter("Department", record.Department));
-                cmd.Parameters.Add(new SqlParameter("AccountNumber", record.AccountNumber));
-                cmd.Parameters.Add(new SqlParameter("Basis", record.Basis));
-                cmd.Parameters.Add(new SqlParameter("BudgetType", record.BudgetType));
+                cmd.Parameters.Add(new SqlParameter("Department", "@"));
+                cmd.Parameters.Add(new SqlParameter("AccoutNumber", record.AccountNumber)); // Accidental misspelling when I first created the sproc
+                cmd.Parameters.Add(new SqlParameter("Basis", "A"));
+                cmd.Parameters.Add(new SqlParameter("BudgetType", "STD"));
                 cmd.Parameters.Add(new SqlParameter("Activity", record.Activity));
-                cmd.Parameters.Add(new SqlParameter("LastDate", record.LastDate));
-                cmd.Parameters.Add(new SqlParameter("UserID", record.UserID));
+                cmd.Parameters.Add(new SqlParameter("LastDate", DateTime.Now));
+                cmd.Parameters.Add(new SqlParameter("UserID", "SYSADM"));
 
                 cmd.ExecuteNonQuery();
             }
