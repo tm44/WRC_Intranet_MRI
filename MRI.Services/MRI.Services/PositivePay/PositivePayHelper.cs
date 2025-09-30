@@ -40,6 +40,8 @@ namespace MRI_Services
             {
                 case "001":
                     return new WralpPositivePayFormatter(writer);
+                case "567":
+                    return new PTOIFrankAlbertFormatter(writer);
                 case "111":
                     return new WRCRealEstatePositivePayFormatter(writer);
                 case "900":
